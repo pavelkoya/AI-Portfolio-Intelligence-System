@@ -30,7 +30,7 @@ python main.py
 ```
 ┌──────────────────────────────────────────────────────────────┐
 │                    DATA LAYER                                │
-│  Robinhood API  ──►  yfinance  ──►  SQLite  ──►  Validator  │
+│  Robinhood API  ──►  yfinance  ──►  SQLite  ──►  Validator   │
 │  (live portfolio)   (prices)    (4 tables)   (quality checks)│
 └────────────────────────────┬─────────────────────────────────┘
                              │
@@ -295,8 +295,8 @@ MIT — see [LICENSE](LICENSE)
 **Daniel Pavelko** — Graduate Student, Binghamton University  
 Quantitative Finance | AI Engineering | Data Science
 
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/yourprofile)
-[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat-square&logo=github)](https://github.com/yourusername)
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/pavelkoya)
+[![GitHub](https://img.shields.io/badge/GitHub-Follow-181717?style=flat-square&logo=github)](https://github.com/pavelkoya)
 
 ---
 
