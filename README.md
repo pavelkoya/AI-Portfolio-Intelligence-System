@@ -1,4 +1,4 @@
-# 📊 AI Portfolio Intelligence System
+# AI Portfolio Intelligence System
 
 > Institutional-grade portfolio analysis combining quantitative finance with multi-agent AI — built on a real Robinhood portfolio.
 
@@ -54,7 +54,7 @@ python main.py
 ┌────────────────────────────▼─────────────────────────────────┐
 │              MULTI-AGENT AI COMMITTEE                        │
 │                                                              │
-│  🐂 Bull Agent          🐻 Bear Agent         ⚖️  CRO Agent  │
+│    Bull Agent            Bear Agent            CRO Agent     │
 │  Growth-focused         Risk-focused          Arbitrates     │
 │  Cites analyst          Cites CVaR            Applies        │
 │  upside + momentum      + GARCH stress        regime rules   │
@@ -230,11 +230,11 @@ python main.py [options]
 
 | Panel | Contents |
 |---|---|
-| 🌡️ **Regime** | HMM risk scalar gauge, Bull/Bear/Neutral probabilities, trend signals table |
-| ⚖️ **Portfolio Health** | Current vs HRP weights chart, rebalancing table (ADD/REDUCE/HOLD), before/after validation |
-| 🛡️ **Risk Levels** | Per-ticker stop loss, take profit, ATR, GARCH vol regime, RSI, SMA200 |
-| 🎯 **Analyst Context** | Analyst price targets, upside %, BUY/HOLD/REDUCE signals |
-| 🤖 **Committee** | Bull/Bear debate, CRO verdict, risk score (1–10), executive summary |
+|  **Regime** | HMM risk scalar gauge, Bull/Bear/Neutral probabilities, trend signals table |
+|  **Portfolio Health** | Current vs HRP weights chart, rebalancing table (ADD/REDUCE/HOLD), before/after validation |
+|  **Risk Levels** | Per-ticker stop loss, take profit, ATR, GARCH vol regime, RSI, SMA200 |
+|  **Analyst Context** | Analyst price targets, upside %, BUY/HOLD/REDUCE signals |
+|  **Committee** | Bull/Bear debate, CRO verdict, risk score (1–10), executive summary |
 
 The sidebar includes a **Generate PDF Report** button that produces a 4-page institutional tear sheet.
 
