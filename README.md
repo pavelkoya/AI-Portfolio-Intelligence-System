@@ -61,8 +61,8 @@ python main.py
 │  + trend signals        + concentration       Validates math │
 │                                                              │
 │  ──────────────────────────────────────────────────────────  │
-│  Post-Rebalance Validator: reruns VaR / Sharpe / Drawdown   │
-│  on proposed weights — proves or disproves CRO claims       │
+│  Post-Rebalance Validator: reruns VaR / Sharpe / Drawdown    │
+│  on proposed weights — proves or disproves CRO claims        │
 └────────────────────────────┬─────────────────────────────────┘
                              │
 ┌────────────────────────────▼─────────────────────────────────┐
