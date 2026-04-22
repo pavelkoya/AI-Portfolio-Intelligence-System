@@ -357,3 +357,341 @@ class InvestmentCommittee:
             "Cache saved to %s", latest_path
         )
         return latest_path
+
+    def run_consistency_audit(self, inputs: dict, n_runs: int = 5) -> dict:
+        """
+        Run the committee n_runs times on identical
+        inputs. Measure weight consistency, risk score
+        variance, and top-ticker agreement rate.
+        Returns audit report dict.
+        """
+        import time
+        import numpy as np
+
+        self.logger.info("Consistency audit: starting %d runs", n_runs)
+
+        all_risk_scores = []
+        all_weights = []   # list of {ticker:wt}
+        all_bull_top3 = []  # list of [t1,t2,t3]
+        all_bear_top3 = []
+        run_times = []
+
+        for i in range(n_runs):
+            t0 = time.time()
+            self.logger.info("Audit run %d/%d", i + 1, n_runs)
+            try:
+                verdict = self.run(inputs)
+
+                # Risk score
+                all_risk_scores.append(verdict.get("portfolio_risk_score") or 0)
+
+                # Proposed weights from CRO
+                weights = {}
+                for pos in verdict.get("final_positions", []):
+                    t = pos.get("ticker")
+                    w = pos.get("target_weight_pct")
+                    if t and w is not None:
+                        weights[t] = float(w)
+                all_weights.append(weights)
+
+                # Bull top-3 tickers
+                bull = verdict.get("bull") or {}
+                if isinstance(bull, dict):
+                    recs = bull.get("recommendations", [])[:3]
+                    all_bull_top3.append([r.get("ticker", "") for r in recs])
+                else:
+                    all_bull_top3.append([])
+
+                # Bear top-3 tickers
+                bear = verdict.get("bear") or {}
+                if isinstance(bear, dict):
+                    recs = bear.get("recommendations", [])[:3]
+                    all_bear_top3.append([r.get("ticker", "") for r in recs])
+                else:
+                    all_bear_top3.append([])
+
+                run_times.append(time.time() - t0)
+
+                # Reset committee state for next run
+                self.bull_output = None
+                self.bear_output = None
+                self.cro_output = None
+                self.proposed_weights = {}
+
+            except Exception as e:
+                self.logger.error("Audit run %d failed: %s", i + 1, e)
+                all_risk_scores.append(None)
+
+        # ── Compute consistency metrics ──
+        valid_scores = [s for s in all_risk_scores if s is not None]
+        risk_score_mean = float(np.mean(valid_scores)) if valid_scores else 0
+        risk_score_std = float(np.std(valid_scores)) if valid_scores else 0
+
+        # Weight consistency per ticker
+        all_tickers = set()
+        for w in all_weights:
+            all_tickers.update(w.keys())
+
+        weight_stats = {}
+        for ticker in all_tickers:
+            vals = [w.get(ticker, 0) for w in all_weights]
+            weight_stats[ticker] = {
+                "mean": round(float(np.mean(vals)), 2),
+                "std": round(float(np.std(vals)), 2),
+                "min": round(float(np.min(vals)), 2),
+                "max": round(float(np.max(vals)), 2),
+                "cv": round(
+                    float(np.std(vals) / np.mean(vals)) if np.mean(vals) > 0 else 0,
+                    3,
+                ),
+            }
+
+        # Top-3 agreement rate
+        def top3_agreement(runs_list):
+            if len(runs_list) < 2:
+                return 0.0
+            from collections import Counter
+
+            frozen = [frozenset(r) for r in runs_list if r]
+            if not frozen:
+                return 0.0
+            most_common_count = Counter(frozen).most_common(1)[0][1]
+            return most_common_count / len(frozen)
+
+        bull_agreement = top3_agreement(all_bull_top3)
+        bear_agreement = top3_agreement(all_bear_top3)
+
+        # Overall consistency score (0-100)
+        avg_weight_cv = (
+            np.mean([s["cv"] for s in weight_stats.values()]) if weight_stats else 1.0
+        )
+
+        weight_stability = max(0, 1 - avg_weight_cv)
+        risk_stability = max(0, 1 - (risk_score_std / 10 if risk_score_std else 0))
+        agent_agreement = (bull_agreement + bear_agreement) / 2
+
+        consistency_score = round(
+            (0.40 * weight_stability + 0.30 * risk_stability + 0.30 * agent_agreement)
+            * 100,
+            1,
+        )
+
+        report = {
+            "n_runs": n_runs,
+            "n_successful": len(valid_scores),
+            "risk_score_mean": round(risk_score_mean, 2),
+            "risk_score_std": round(risk_score_std, 2),
+            "risk_score_range": [
+                min(valid_scores) if valid_scores else 0,
+                max(valid_scores) if valid_scores else 0,
+            ],
+            "weight_stats": weight_stats,
+            "bull_top3_agreement": round(bull_agreement, 3),
+            "bear_top3_agreement": round(bear_agreement, 3),
+            "overall_consistency_score": consistency_score,
+            "avg_run_time_sec": round(float(np.mean(run_times)) if run_times else 0, 1),
+            "all_risk_scores": all_risk_scores,
+            "bull_top3_all_runs": all_bull_top3,
+            "bear_top3_all_runs": all_bear_top3,
+            "interpretation": (
+                f"CRO weight consistency: {weight_stability:.0%}. "
+                f"Risk score std: {risk_score_std:.1f}. "
+                f"Bull agent top-3 agreement: {bull_agreement:.0%}. "
+                f"Bear agent top-3 agreement: {bear_agreement:.0%}. "
+                f"Overall consistency: {consistency_score}/100."
+            ),
+        }
+
+        self.logger.info(
+            "Audit complete: consistency=%s/100 risk_std=%.1f bull_agree=%.0f%% bear_agree=%.0f%%",
+            consistency_score,
+            risk_score_std,
+            bull_agreement * 100,
+            bear_agreement * 100,
+        )
+        return report
+
+
+def score_citation_quality(agent_output: dict, quant_inputs: dict, agent_type: str = "bull") -> dict:
+    """
+    Evaluate whether each cited data point in an
+    agent's recommendation actually supports the
+    conclusion directionally.
+
+    Returns contradiction rate and full audit log.
+    """
+    import re
+
+    per_ticker = quant_inputs.get("per_ticker", {})
+    trend_signals = quant_inputs.get("trend_signals", {})
+    low_conf = quant_inputs.get("low_confidence_tickers", [])
+
+    # Rules for directional consistency:
+    # {metric_keyword: (bull_is_good, bear_is_good)}
+    METRIC_RULES = {
+        "analyst_upside": (True, False),
+        "trend_confidence": (True, False),
+        "momentum": (True, False),
+        "sharpe": (True, False),
+        "rsi_oversold": (True, False),
+        "rsi_overbought": (False, True),
+        "rsi": (None, None),  # ambiguous
+        "max_drawdown": (False, True),
+        "unrealized_pnl": (True, False),
+        "var_95": (False, True),
+        "garch_vol": (False, True),
+        "beta": (False, True),
+        "concentration_risk": (False, True),
+        "hrp_delta": (None, None),  # depends
+        "seasonal": (True, False),
+    }
+
+    total_citations = 0
+    consistent_cites = 0
+    contradictory_cites = 0
+    ambiguous_cites = 0
+    contradictions_log = []
+
+    recs = []
+    if isinstance(agent_output, dict):
+        recs = agent_output.get("recommendations", [])
+
+    for rec in recs:
+        ticker = rec.get("ticker", "")
+        action = rec.get("action", "")
+        _ = action
+        cited = rec.get("key_metrics_cited", []) or []
+        reasoning = rec.get("reasoning", "") or ""
+        _ = reasoning
+
+        # Get quant data for this ticker
+        td = per_ticker.get(ticker, {}) or {}
+        _ = td
+        tren = trend_signals.get(ticker, {}) or {}
+
+        for cite in cited:
+            if not cite:
+                continue
+            cite_str = str(cite).lower()
+            total_citations += 1
+
+            # Try to identify metric type
+            consistent = None
+
+            for metric, (bull_good, bear_good) in METRIC_RULES.items():
+                if metric not in cite_str:
+                    continue
+
+                # Extract numeric value from cite string
+                nums = re.findall(r"[-+]?\d+\.?\d*", cite_str)
+                value = float(nums[0]) if nums else None
+
+                if bull_good is None:
+                    ambiguous_cites += 1
+                    consistent = None
+                    break
+
+                # Evaluate consistency
+                if agent_type == "bull":
+                    if bull_good:
+                        consistent = value > 0 if value is not None else True
+                    else:
+                        consistent = False
+
+                elif agent_type == "bear":
+                    if bear_good:
+                        consistent = value > 0 if value is not None else True
+                    else:
+                        consistent = False
+                break
+
+            # Special case: trend_direction check
+            if "trend_confidence" in cite_str:
+                trend_dir = tren.get("trend_direction", "")
+                conf = tren.get("trend_confidence_score", 0)
+                if agent_type == "bull" and trend_dir == "Down" and conf > 0.6:
+                    consistent = False
+                    contradictions_log.append(
+                        {
+                            "ticker": ticker,
+                            "cite": cite_str[:100],
+                            "issue": (
+                                f"Bull cites high trend confidence ({conf:.2f}) "
+                                f"but trend_direction=Down"
+                            ),
+                            "severity": "HIGH",
+                        }
+                    )
+                elif agent_type == "bear" and trend_dir == "Up" and conf > 0.6:
+                    consistent = False
+                    contradictions_log.append(
+                        {
+                            "ticker": ticker,
+                            "cite": cite_str[:100],
+                            "issue": (
+                                f"Bear cites high trend confidence ({conf:.2f}) "
+                                f"but trend_direction=Up"
+                            ),
+                            "severity": "HIGH",
+                        }
+                    )
+
+            # Special case: low confidence tickers
+            if ticker in low_conf and "trend_confidence" in cite_str:
+                consistent = False
+                contradictions_log.append(
+                    {
+                        "ticker": ticker,
+                        "cite": cite_str[:100],
+                        "issue": (
+                            f"{ticker} is in low_confidence_tickers list "
+                            f"but trend signal cited"
+                        ),
+                        "severity": "MEDIUM",
+                    }
+                )
+
+            # Tally
+            if consistent is True:
+                consistent_cites += 1
+            elif consistent is False:
+                contradictory_cites += 1
+                if not any(c["cite"] == cite_str[:100] for c in contradictions_log):
+                    contradictions_log.append(
+                        {
+                            "ticker": ticker,
+                            "cite": cite_str[:100],
+                            "issue": (
+                                f"{agent_type.upper()} citation direction appears "
+                                f"inconsistent with recommendation"
+                            ),
+                            "severity": "LOW",
+                        }
+                    )
+            else:
+                ambiguous_cites += 1
+
+    consistency_rate = consistent_cites / total_citations if total_citations > 0 else 1.0
+    contradiction_rate = (
+        contradictory_cites / total_citations if total_citations > 0 else 0.0
+    )
+
+    return {
+        "agent_type": agent_type,
+        "total_citations": total_citations,
+        "consistent_citations": consistent_cites,
+        "contradictory_citations": contradictory_cites,
+        "ambiguous_citations": ambiguous_cites,
+        "consistency_rate": round(consistency_rate, 3),
+        "contradiction_rate": round(contradiction_rate, 3),
+        "contradictions": contradictions_log,
+        "quality_grade": (
+            "A"
+            if consistency_rate >= 0.90
+            else "B"
+            if consistency_rate >= 0.75
+            else "C"
+            if consistency_rate >= 0.60
+            else "D"
+        ),
+    }
