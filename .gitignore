@@ -1,0 +1,9 @@
+.env
+.env.example
+__pycache__/
+*.db
+portfolio_ai.db
+outputs/
+venv/
+*.pkl
+.pytest_cache/
