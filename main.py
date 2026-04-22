@@ -167,7 +167,7 @@ def step_quant(data_out, db) -> dict:
         raise
 
 
-def step_advanced_quant(data_out, args=None) -> dict:
+def step_advanced_quant(data_out, quant_out=None, args=None) -> dict:
     """Phase 4: GARCH + HMM + HRP + Trend."""
     t0 = time.time()
     logger.info("=" * 50)
@@ -279,6 +279,43 @@ def step_advanced_quant(data_out, args=None) -> dict:
         else:
             logger.info("--skip-backtest: skipping")
 
+        logger.info("  RAAM: ranked asset allocation")
+        raam_ci = {}
+        raam_results = {}
+        try:
+            from quant.raam_engine import RAAMEngine
+
+            # Get correlation matrix from quant engine
+            # It's stored in quant_ci under optimization
+            corr_matrix = (
+                (quant_out or {})
+                .get("quant_ci", {})
+                .get("optimization", {})
+                .get("correlation", {})
+                .get("matrix", {})
+            )
+
+            raam = RAAMEngine(
+                prices=prices,
+                garch_output=garch_output,
+                correlation_matrix=corr_matrix,
+                risk_levels={},  # will be filled in step 5
+                trend_output=trend_output,
+                regime_current=regime_current,
+                top_n=5,
+                use_regime_weights=True,
+            )
+            raam_results = raam.run()
+            raam_ci = raam.get_committee_input()
+
+            logger.info(
+                "  RAAM selected: %s | cash=%.0f%%",
+                raam_results.get("selected_tickers", []),
+                raam_results.get("cash_pct", 0) * 100,
+            )
+        except Exception as e:
+            logger.error("  RAAM failed: %s", e)
+
         logger.info("Advanced quant complete (%.1fs)", time.time() - t0)
         return {
             "garch_output": garch_output,
@@ -291,6 +328,8 @@ def step_advanced_quant(data_out, args=None) -> dict:
             "trend_ci": trend_ci,
             "low_conf": low_conf,
             "backtest_ci": backtest_ci,
+            "raam_ci": raam_ci,
+            "raam_results": raam_results if "raam_results" in dir() else {},
         }
     except Exception as e:
         logger.error("STEP 4 failed: %s", e, exc_info=True)
@@ -352,6 +391,7 @@ def step_committee(data_out, quant_out, adv_out, ext_out, args) -> dict:
         inputs = inputs_obj.build()
         inputs["trend_signals"] = adv_out["trend_ci"]
         inputs["low_confidence_tickers"] = adv_out["low_conf"]
+        inputs["raam_signals"] = adv_out.get("raam_ci", {})
         backtest_ci = adv_out.get("backtest_ci", {})
         if backtest_ci:
             inputs["backtest_results"] = {
@@ -398,6 +438,49 @@ def step_committee(data_out, quant_out, adv_out, ext_out, args) -> dict:
         )
         verdict = committee.run(inputs)
         cache_path = committee.save_cache(inputs, output_dir=args.output_dir)
+
+        if args.consistency_audit:
+            logger.info("Running consistency audit (%d runs)...", args.audit_runs)
+            try:
+                audit = committee.run_consistency_audit(inputs, n_runs=args.audit_runs)
+                # Save audit to file
+                audit_path = os.path.join(args.output_dir, "consistency_audit.json")
+                with open(audit_path, "w") as f:
+                    json.dump(audit, f, indent=2, default=str)
+                logger.info("Consistency audit saved: %s", audit_path)
+                logger.info(
+                    "Overall consistency: %s/100",
+                    audit.get("overall_consistency_score"),
+                )
+                logger.info(audit.get("interpretation", ""))
+
+                # Run citation quality scoring
+                from ai.committee import score_citation_quality
+
+                bull_quality = score_citation_quality(
+                    committee.bull_output,
+                    inputs,
+                    "bull",
+                )
+                bear_quality = score_citation_quality(
+                    committee.bear_output,
+                    inputs,
+                    "bear",
+                )
+                logger.info(
+                    "Citation quality — Bull: %s (contradiction rate: %.0f%%) Bear: %s (rate: %.0f%%)",
+                    bull_quality["quality_grade"],
+                    bull_quality["contradiction_rate"] * 100,
+                    bear_quality["quality_grade"],
+                    bear_quality["contradiction_rate"] * 100,
+                )
+
+                # Save citation audit
+                citation_path = os.path.join(args.output_dir, "citation_audit.json")
+                with open(citation_path, "w") as f:
+                    json.dump({"bull": bull_quality, "bear": bear_quality}, f, indent=2, default=str)
+            except Exception as e:
+                logger.error("Consistency audit failed: %s", e)
 
         logger.info(
             "Committee complete: risk_score=%s flags=%d (%.1fs)",
@@ -621,6 +704,17 @@ def main():
         action="store_true",
         help="Skip walk-forward backtest engine",
     )
+    parser.add_argument(
+        "--consistency-audit",
+        action="store_true",
+        help="Run LLM committee N times and report consistency score",
+    )
+    parser.add_argument(
+        "--audit-runs",
+        type=int,
+        default=5,
+        help="Number of committee runs for audit (default: 5)",
+    )
     parser.add_argument("--price-period", default="2y", choices=["1y", "2y", "5y"])
     parser.add_argument("--no-refresh", action="store_true")
     parser.add_argument("--output-dir", default="outputs")
@@ -645,7 +739,7 @@ def main():
     try:
         data_out = step_load_data(args, db)
         quant_out = step_quant(data_out, db)
-        adv_out = step_advanced_quant({**data_out}, args)
+        adv_out = step_advanced_quant({**data_out}, quant_out, args)
         ext_out = step_external_data({**data_out, **adv_out})
         committee_out = step_committee(data_out, quant_out, adv_out, ext_out, args)
         step_save_to_db(data_out, quant_out, adv_out, ext_out, committee_out, db)

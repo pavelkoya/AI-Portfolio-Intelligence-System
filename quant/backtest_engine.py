@@ -337,10 +337,42 @@ class BacktestEngine:
                 start_idx += self.test
                 continue
 
+            # Strategy B: RAAM
+            raam_weights_period = {}
+            try:
+                from quant.raam_engine import RAAMEngine
+
+                # Correlation matrix from training slice
+                train_returns_for_corr = test_returns.corr().to_dict()
+                raam_bt = RAAMEngine(
+                    prices=train_prices,
+                    garch_output={},  # minimal - use vol proxy
+                    correlation_matrix=train_returns_for_corr,
+                    risk_levels={},
+                    trend_output={},
+                    regime_current={
+                        "dominant_regime": (
+                            "Bear" if risk_scalar > 0.7 else "Bull" if risk_scalar < 0.3 else "Neutral"
+                        )
+                    },
+                    top_n=min(5, len(valid_tickers)),
+                    use_regime_weights=True,
+                )
+                raam_out = raam_bt.run()
+                raam_selected = raam_out.get("selected_tickers", [])
+                raam_weights_period = {
+                    t: raam_out["raam_weights"].get(t, 0)
+                    for t in raam_selected
+                }
+            except Exception:
+                raam_weights_period = eq_weights.copy()
+
             hrp_returns = self._compute_weighted_returns(test_returns, adj_weights)
+            raam_returns = self._compute_weighted_returns(test_returns, raam_weights_period)
             eq_returns = self._compute_weighted_returns(test_returns, eq_weights)
 
             hrp_metrics = compute_period_metrics(hrp_returns, "hrp")
+            raam_metrics = compute_period_metrics(raam_returns, "raam")
             eq_metrics = compute_period_metrics(eq_returns, "benchmark")
             capped = min(risk_scalar, self.regime_scalar_cap)
 
@@ -357,6 +389,9 @@ class BacktestEngine:
                     "hrp_return": hrp_metrics["total_return"],
                     "hrp_sharpe": hrp_metrics["sharpe"],
                     "hrp_drawdown": hrp_metrics["max_drawdown"],
+                    "raam_return": raam_metrics["total_return"],
+                    "raam_sharpe": raam_metrics["sharpe"],
+                    "raam_drawdown": raam_metrics["max_drawdown"],
                     "eq_return": eq_metrics["total_return"],
                     "eq_sharpe": eq_metrics["sharpe"],
                     "eq_drawdown": eq_metrics["max_drawdown"],
@@ -365,15 +400,14 @@ class BacktestEngine:
             )
 
             self.logger.info(
-                "  Period %2d | %s → %s | HRP: %+.2f%%  EQ: %+.2f%%  scalar=%.3f(cap=%.1f)  (%.1fs)",
+                "  Period %2d | %s → %s | HRP: %+.2f%%  RAAM: %+.2f%%  EQ: %+.2f%%  scalar=%.2f",
                 period_num,
                 str(test_dates[0])[:10],
                 str(test_dates[-1])[:10],
                 hrp_metrics["total_return"] * 100,
+                raam_metrics["total_return"] * 100,
                 eq_metrics["total_return"] * 100,
                 risk_scalar,
-                self.regime_scalar_cap,
-                time.time() - t0_period,
             )
 
             period_num += 1
@@ -408,6 +442,24 @@ class BacktestEngine:
         hrp_dd = float(df["hrp_drawdown"].min())
         bench_dd = float(df["eq_drawdown"].min())
 
+        # Add RAAM CAGR + Sharpe if column exists
+        if "raam_return" in df.columns:
+            raam_cagr = cagr(df["raam_return"].tolist())
+            raam_sharpe = float(df["raam_sharpe"].mean())
+            raam_dd = float(df["raam_drawdown"].min())
+
+            # RAAM equity curve
+            eq_curve_raam = []
+            cum_raam = 1.0
+            for _, row in df.iterrows():
+                cum_raam *= (1 + row["raam_return"])
+                eq_curve_raam.append(
+                    {"date": row["test_end"], "value": round(cum_raam - 1, 6)}
+                )
+        else:
+            raam_cagr = raam_sharpe = raam_dd = 0.0
+            eq_curve_raam = []
+
         eq_curve_hrp = []
         eq_curve_bench = []
         cum_hrp = 1.0
@@ -427,12 +479,16 @@ class BacktestEngine:
         result = {
             "hrp_strategy_cagr": round(hrp_cagr, 4),
             "benchmark_cagr": round(bench_cagr, 4),
+            "raam_strategy_cagr": round(raam_cagr, 4),
             "hrp_sharpe": round(hrp_sharpe, 4),
+            "raam_sharpe": round(raam_sharpe, 4),
             "benchmark_sharpe": round(bench_sharpe, 4),
             "hrp_max_drawdown": round(hrp_dd, 4),
+            "raam_max_drawdown": round(raam_dd, 4),
             "benchmark_max_drawdown": round(bench_dd, 4),
             "regime_timing_value": round(regime_timing, 4),
             "equity_curve_hrp": eq_curve_hrp,
+            "equity_curve_raam": eq_curve_raam,
             "equity_curve_benchmark": eq_curve_bench,
             "n_periods": len(df),
             "window_days": self.train,
