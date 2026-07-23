@@ -1,0 +1,1040 @@
+{
+  "timestamp": "20260422_200407",
+  "inputs": {
+    "as_of": "2026-04-22 20:02",
+    "portfolio_summary": {
+      "total_value": 1171.22,
+      "position_count": 15,
+      "positions": [
+        {
+          "ticker": "AAPL",
+          "market_value": 20.69,
+          "current_price": 272.41,
+          "avg_buy_price": 263.357,
+          "unrealized_pnl": 0.687485
+        },
+        {
+          "ticker": "DASH",
+          "market_value": 79.31,
+          "current_price": 180.5,
+          "avg_buy_price": 182.0702,
+          "unrealized_pnl": -0.689932
+        },
+        {
+          "ticker": "GOOGL",
+          "market_value": 160.12,
+          "current_price": 338.53,
+          "avg_buy_price": 294.0466,
+          "unrealized_pnl": 21.039536
+        },
+        {
+          "ticker": "IAU",
+          "market_value": 14.97,
+          "current_price": 89.2616,
+          "avg_buy_price": 89.4401,
+          "unrealized_pnl": -0.029936
+        },
+        {
+          "ticker": "META",
+          "market_value": 202.26,
+          "current_price": 672.8,
+          "avg_buy_price": 615.5427,
+          "unrealized_pnl": 17.213205
+        },
+        {
+          "ticker": "MSFT",
+          "market_value": 391.32,
+          "current_price": 427.5743,
+          "avg_buy_price": 376.9619,
+          "unrealized_pnl": 46.321076
+        },
+        {
+          "ticker": "PERF",
+          "market_value": 6.76,
+          "current_price": 1.69,
+          "avg_buy_price": 1.68,
+          "unrealized_pnl": 0.04
+        },
+        {
+          "ticker": "QQQ",
+          "market_value": 23.79,
+          "current_price": 655.215,
+          "avg_buy_price": 606.7366,
+          "unrealized_pnl": 1.760202
+        },
+        {
+          "ticker": "QQQM",
+          "market_value": 76.12,
+          "current_price": 269.8,
+          "avg_buy_price": 248.2491,
+          "unrealized_pnl": 6.080285
+        },
+        {
+          "ticker": "TQQQ",
+          "market_value": 12.21,
+          "current_price": 60.2406,
+          "avg_buy_price": 49.3501,
+          "unrealized_pnl": 2.206786
+        },
+        {
+          "ticker": "TTWO",
+          "market_value": 41.8,
+          "current_price": 217.0,
+          "avg_buy_price": 207.6606,
+          "unrealized_pnl": 1.798974
+        },
+        {
+          "ticker": "V",
+          "market_value": 62.24,
+          "current_price": 311.0,
+          "avg_buy_price": 304.8125,
+          "unrealized_pnl": 1.238261
+        },
+        {
+          "ticker": "VGT",
+          "market_value": 21.47,
+          "current_price": 102.7965,
+          "avg_buy_price": 95.8665,
+          "unrealized_pnl": 1.447206
+        },
+        {
+          "ticker": "VOO",
+          "market_value": 31.71,
+          "current_price": 653.03,
+          "avg_buy_price": 619.6203,
+          "unrealized_pnl": 1.622442
+        },
+        {
+          "ticker": "VXUS",
+          "market_value": 26.45,
+          "current_price": 82.6,
+          "avg_buy_price": 78.1689,
+          "unrealized_pnl": 1.418856
+        }
+      ]
+    },
+    "regime": {
+      "Bull": 0.457,
+      "Neutral": 0.37,
+      "Bear": 0.173,
+      "dominant_regime": "Bull",
+      "risk_scalar": 0.358
+    },
+    "risk_metrics": {
+      "portfolio_sharpe": 1.363446919772509,
+      "portfolio_max_drawdown": "-23.4%",
+      "portfolio_var_95_dollar": -24.500461168597344,
+      "portfolio_beta": 1.193786624106995,
+      "portfolio_alpha": 0.07455042024337316,
+      "monte_carlo": {
+        "initial_value": 1171.2200000000003,
+        "percentile_5": 1099.5139500684422,
+        "percentile_50": 1606.8551427576276,
+        "percentile_95": 2352.3989001820673,
+        "expected_return_pct": 0.3719498836748239
+      }
+    },
+    "optimization": {
+      "optimal_weights": {
+        "AAPL": 0.0,
+        "DASH": 0.03929,
+        "GOOGL": 0.07565,
+        "IAU": 0.59142,
+        "META": 0.29365,
+        "MSFT": 0.0,
+        "PERF": 0.0,
+        "QQQ": 0.0,
+        "QQQM": 0.0,
+        "TQQQ": 0.0,
+        "TTWO": 0.0,
+        "V": 0.0,
+        "VGT": 0.0,
+        "VOO": 0.0,
+        "VXUS": 0.0
+      },
+      "hrp_rebalancing": [
+        {
+          "ticker": "MSFT",
+          "current_weight": 0.3341,
+          "hrp_weight": 0.0483,
+          "delta": -0.2859,
+          "action": "REDUCE"
+        },
+        {
+          "ticker": "META",
+          "current_weight": 0.1727,
+          "hrp_weight": 0.0229,
+          "delta": -0.1498,
+          "action": "REDUCE"
+        },
+        {
+          "ticker": "VOO",
+          "current_weight": 0.0271,
+          "hrp_weight": 0.1373,
+          "delta": 0.1102,
+          "action": "ADD"
+        },
+        {
+          "ticker": "V",
+          "current_weight": 0.0531,
+          "hrp_weight": 0.1406,
+          "delta": 0.0874,
+          "action": "ADD"
+        },
+        {
+          "ticker": "IAU",
+          "current_weight": 0.0128,
+          "hrp_weight": 0.0977,
+          "delta": 0.0849,
+          "action": "ADD"
+        },
+        {
+          "ticker": "VXUS",
+          "current_weight": 0.0226,
+          "hrp_weight": 0.1059,
+          "delta": 0.0833,
+          "action": "ADD"
+        },
+        {
+          "ticker": "GOOGL",
+          "current_weight": 0.1367,
+          "hrp_weight": 0.0623,
+          "delta": -0.0744,
+          "action": "REDUCE"
+        },
+        {
+          "ticker": "AAPL",
+          "current_weight": 0.0177,
+          "hrp_weight": 0.0919,
+          "delta": 0.0742,
+          "action": "ADD"
+        },
+        {
+          "ticker": "TTWO",
+          "current_weight": 0.0357,
+          "hrp_weight": 0.0836,
+          "delta": 0.0479,
+          "action": "ADD"
+        },
+        {
+          "ticker": "DASH",
+          "current_weight": 0.0677,
+          "hrp_weight": 0.0302,
+          "delta": -0.0375,
+          "action": "REDUCE"
+        },
+        {
+          "ticker": "QQQ",
+          "current_weight": 0.0203,
+          "hrp_weight": 0.0545,
+          "delta": 0.0342,
+          "action": "ADD"
+        },
+        {
+          "ticker": "VGT",
+          "current_weight": 0.0183,
+          "hrp_weight": 0.0405,
+          "delta": 0.0222,
+          "action": "ADD"
+        },
+        {
+          "ticker": "PERF",
+          "current_weight": 0.0058,
+          "hrp_weight": 0.0221,
+          "delta": 0.0164,
+          "action": "HOLD"
+        },
+        {
+          "ticker": "QQQM",
+          "current_weight": 0.065,
+          "hrp_weight": 0.0548,
+          "delta": -0.0102,
+          "action": "HOLD"
+        },
+        {
+          "ticker": "TQQQ",
+          "current_weight": 0.0104,
+          "hrp_weight": 0.0072,
+          "delta": -0.0032,
+          "action": "HOLD"
+        }
+      ],
+      "concentration_risk_ticker": "MSFT",
+      "portfolio_cvar": -0.1308
+    },
+    "per_ticker": {
+      "AAPL": {
+        "rsi": 62.734666514970165,
+        "rsi_signal": "Neutral",
+        "macd_signal": "Bullish",
+        "above_sma_200": true,
+        "sharpe": 0.5059767030574348,
+        "max_drawdown_pct": "-33.4%",
+        "beta": 1.2085634067836397,
+        "garch_vol": 0.2056,
+        "vol_regime": "Low",
+        "stop_loss": 260.84,
+        "take_profit": 289.77,
+        "analyst_target": 297.71,
+        "analyst_upside": "9.3%",
+        "analyst_signal": "HOLD"
+      },
+      "DASH": {
+        "rsi": 61.90985721607085,
+        "rsi_signal": "Neutral",
+        "macd_signal": "Bullish",
+        "above_sma_200": false,
+        "sharpe": 0.28335437692776644,
+        "max_drawdown_pct": "-82.5%",
+        "beta": 1.7432420786788467,
+        "garch_vol": 0.3101,
+        "vol_regime": "Low",
+        "stop_loss": 164.99,
+        "take_profit": 203.76,
+        "analyst_target": 251.55,
+        "analyst_upside": "39.4%",
+        "analyst_signal": "BUY"
+      },
+      "GOOGL": {
+        "rsi": 66.67883821844855,
+        "rsi_signal": "Neutral",
+        "macd_signal": "Bullish",
+        "above_sma_200": true,
+        "sharpe": 0.7292909920279144,
+        "max_drawdown_pct": "-44.3%",
+        "beta": 1.2394728512833568,
+        "garch_vol": 0.2183,
+        "vol_regime": "Low",
+        "stop_loss": 323.34,
+        "take_profit": 361.32,
+        "analyst_target": 376.68,
+        "analyst_upside": "11.3%",
+        "analyst_signal": "BUY"
+      },
+      "IAU": {
+        "rsi": 48.422654310555785,
+        "rsi_signal": "Neutral",
+        "macd_signal": "Bullish",
+        "above_sma_200": true,
+        "sharpe": 0.96007455890749,
+        "max_drawdown_pct": "-20.9%",
+        "beta": 0.13241849172343964,
+        "garch_vol": 0.1983,
+        "vol_regime": "Elevated",
+        "stop_loss": 85.68,
+        "take_profit": 94.64,
+        "analyst_target": null,
+        "analyst_upside": "N/A",
+        "analyst_signal": "NO DATA"
+      },
+      "META": {
+        "rsi": 63.515598920538494,
+        "rsi_signal": "Neutral",
+        "macd_signal": "Bullish",
+        "above_sma_200": false,
+        "sharpe": 0.49723633163638564,
+        "max_drawdown_pct": "-76.7%",
+        "beta": 1.5998259221443332,
+        "garch_vol": 0.2538,
+        "vol_regime": "Low",
+        "stop_loss": 637.43,
+        "take_profit": 725.85,
+        "analyst_target": 855.11,
+        "analyst_upside": "27.1%",
+        "analyst_signal": "BUY"
+      },
+      "MSFT": {
+        "rsi": 73.05925947592736,
+        "rsi_signal": "Overbought",
+        "macd_signal": "Bullish",
+        "above_sma_200": false,
+        "sharpe": 0.3714976986178112,
+        "max_drawdown_pct": "-37.6%",
+        "beta": 1.1315734065200627,
+        "garch_vol": 0.2154,
+        "vol_regime": "Elevated",
+        "stop_loss": 408.62,
+        "take_profit": 456.0,
+        "analyst_target": 579.57,
+        "analyst_upside": "35.5%",
+        "analyst_signal": "BUY"
+      },
+      "PERF": {
+        "rsi": 55.823482995550656,
+        "rsi_signal": "Neutral",
+        "macd_signal": "Bearish",
+        "above_sma_200": false,
+        "sharpe": -0.29481913870528653,
+        "max_drawdown_pct": "-86.9%",
+        "beta": 0.7823978931753388,
+        "garch_vol": 0.3158,
+        "vol_regime": "Low",
+        "stop_loss": 1.55,
+        "take_profit": 1.9,
+        "analyst_target": 3.51,
+        "analyst_upside": "107.8%",
+        "analyst_signal": "BUY"
+      },
+      "QQQ": {
+        "rsi": 74.13605119534232,
+        "rsi_signal": "Overbought",
+        "macd_signal": "Bullish",
+        "above_sma_200": true,
+        "sharpe": 0.5229120261802417,
+        "max_drawdown_pct": "-35.6%",
+        "beta": 1.240788060348332,
+        "garch_vol": 0.1764,
+        "vol_regime": "Elevated",
+        "stop_loss": 635.08,
+        "take_profit": 685.41,
+        "analyst_target": null,
+        "analyst_upside": "N/A",
+        "analyst_signal": "NO DATA"
+      },
+      "QQQM": {
+        "rsi": 74.15128009509448,
+        "rsi_signal": "Overbought",
+        "macd_signal": "Bullish",
+        "above_sma_200": true,
+        "sharpe": 0.5258835862054103,
+        "max_drawdown_pct": "-35.6%",
+        "beta": 1.2327231023573069,
+        "garch_vol": 0.1761,
+        "vol_regime": "Elevated",
+        "stop_loss": 261.88,
+        "take_profit": 281.68,
+        "analyst_target": null,
+        "analyst_upside": "N/A",
+        "analyst_signal": "NO DATA"
+      },
+      "TQQQ": {
+        "rsi": 74.09713705485177,
+        "rsi_signal": "Overbought",
+        "macd_signal": "Bullish",
+        "above_sma_200": true,
+        "sharpe": 0.5117271030264077,
+        "max_drawdown_pct": "-81.8%",
+        "beta": 3.6912612694264575,
+        "garch_vol": 0.3041,
+        "vol_regime": "Low",
+        "stop_loss": 55.6,
+        "take_profit": 67.2,
+        "analyst_target": null,
+        "analyst_upside": "N/A",
+        "analyst_signal": "NO DATA"
+      },
+      "TTWO": {
+        "rsi": 65.16822086455683,
+        "rsi_signal": "Neutral",
+        "macd_signal": "Bullish",
+        "above_sma_200": false,
+        "sharpe": 0.16386857233074742,
+        "max_drawdown_pct": "-51.5%",
+        "beta": 0.8040389306326766,
+        "garch_vol": 0.2229,
+        "vol_regime": "Low",
+        "stop_loss": 205.62,
+        "take_profit": 234.07,
+        "analyst_target": 277.1,
+        "analyst_upside": "27.7%",
+        "analyst_signal": "BUY"
+      },
+      "V": {
+        "rsi": 52.07609140621805,
+        "rsi_signal": "Neutral",
+        "macd_signal": "Bullish",
+        "above_sma_200": false,
+        "sharpe": 0.22045655978999007,
+        "max_drawdown_pct": "-29.2%",
+        "beta": 0.8426008812875688,
+        "garch_vol": 0.1837,
+        "vol_regime": "Low",
+        "stop_loss": 299.28,
+        "take_profit": 328.57,
+        "analyst_target": 393.43,
+        "analyst_upside": "26.5%",
+        "analyst_signal": "BUY"
+      },
+      "VGT": {
+        "rsi": 78.05206141964106,
+        "rsi_signal": "Overbought",
+        "macd_signal": "Bullish",
+        "above_sma_200": true,
+        "sharpe": -0.06141466085055172,
+        "max_drawdown_pct": "-90.2%",
+        "beta": 1.4200564718688093,
+        "garch_vol": 0.1799,
+        "vol_regime": "Low",
+        "stop_loss": 99.12,
+        "take_profit": 108.31,
+        "analyst_target": null,
+        "analyst_upside": "N/A",
+        "analyst_signal": "NO DATA"
+      },
+      "VOO": {
+        "rsi": 70.21632290808297,
+        "rsi_signal": "Overbought",
+        "macd_signal": "Bullish",
+        "above_sma_200": true,
+        "sharpe": 0.48688834353530114,
+        "max_drawdown_pct": "-25.4%",
+        "beta": 0.9803012289000064,
+        "garch_vol": 0.157,
+        "vol_regime": "Stress",
+        "stop_loss": 633.53,
+        "take_profit": 682.28,
+        "analyst_target": null,
+        "analyst_upside": "N/A",
+        "analyst_signal": "NO DATA"
+      },
+      "VXUS": {
+        "rsi": 60.165465052647484,
+        "rsi_signal": "Neutral",
+        "macd_signal": "Bullish",
+        "above_sma_200": true,
+        "sharpe": 0.1308338343341778,
+        "max_drawdown_pct": "-32.7%",
+        "beta": 0.7474490403588313,
+        "garch_vol": 0.177,
+        "vol_regime": "Stress",
+        "stop_loss": 79.39,
+        "take_profit": 87.41,
+        "analyst_target": null,
+        "analyst_upside": "N/A",
+        "analyst_signal": "NO DATA"
+      }
+    },
+    "trend_signals": {
+      "AAPL": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.000527,
+        "trend_slope_acceleration": 0.002887,
+        "trend_uncertainty_pct": 0.0296,
+        "seasonal_component_pct": -2.7111,
+        "trend_confidence_score": 0.1646
+      },
+      "DASH": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.004919,
+        "trend_slope_acceleration": 0.00902,
+        "trend_uncertainty_pct": 0.0718,
+        "seasonal_component_pct": -0.401,
+        "trend_confidence_score": 0.7727
+      },
+      "GOOGL": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.000323,
+        "trend_slope_acceleration": 0.008777,
+        "trend_uncertainty_pct": 0.0446,
+        "seasonal_component_pct": 1.1525,
+        "trend_confidence_score": 0.0294
+      },
+      "IAU": {
+        "trend_direction": "Up",
+        "trend_slope_normalized": 0.000855,
+        "trend_slope_acceleration": -0.00203,
+        "trend_uncertainty_pct": 0.0595,
+        "seasonal_component_pct": -0.7979,
+        "trend_confidence_score": 0.1238
+      },
+      "META": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.000792,
+        "trend_slope_acceleration": 0.005904,
+        "trend_uncertainty_pct": 0.0498,
+        "seasonal_component_pct": 0.8994,
+        "trend_confidence_score": 0.1344
+      },
+      "MSFT": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.00315,
+        "trend_slope_acceleration": 0.005224,
+        "trend_uncertainty_pct": 0.0505,
+        "seasonal_component_pct": -0.6624,
+        "trend_confidence_score": 0.7163
+      },
+      "PERF": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.000994,
+        "trend_slope_acceleration": 0.009341,
+        "trend_uncertainty_pct": 0.0779,
+        "seasonal_component_pct": -5.4184,
+        "trend_confidence_score": 0.0902
+      },
+      "QQQ": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.000282,
+        "trend_slope_acceleration": 0.004277,
+        "trend_uncertainty_pct": 0.0257,
+        "seasonal_component_pct": 1.6531,
+        "trend_confidence_score": 0.066
+      },
+      "QQQM": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.000282,
+        "trend_slope_acceleration": 0.004274,
+        "trend_uncertainty_pct": 0.0257,
+        "seasonal_component_pct": 1.6548,
+        "trend_confidence_score": 0.066
+      },
+      "TQQQ": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.001543,
+        "trend_slope_acceleration": 0.012636,
+        "trend_uncertainty_pct": 0.0677,
+        "seasonal_component_pct": 3.0116,
+        "trend_confidence_score": 0.2
+      },
+      "TTWO": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.00305,
+        "trend_slope_acceleration": 0.003392,
+        "trend_uncertainty_pct": 0.0616,
+        "seasonal_component_pct": -0.3366,
+        "trend_confidence_score": 0.6279
+      },
+      "V": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.001829,
+        "trend_slope_acceleration": 0.002609,
+        "trend_uncertainty_pct": 0.0255,
+        "seasonal_component_pct": -0.0759,
+        "trend_confidence_score": 0.7898
+      },
+      "VGT": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.000293,
+        "trend_slope_acceleration": 0.005599,
+        "trend_uncertainty_pct": 0.0314,
+        "seasonal_component_pct": 1.9668,
+        "trend_confidence_score": 0.0456
+      },
+      "VOO": {
+        "trend_direction": "Down",
+        "trend_slope_normalized": -0.000261,
+        "trend_slope_acceleration": 0.003169,
+        "trend_uncertainty_pct": 0.0207,
+        "seasonal_component_pct": 1.6081,
+        "trend_confidence_score": 0.0893
+      },
+      "VXUS": {
+        "trend_direction": "Up",
+        "trend_slope_normalized": 0.000555,
+        "trend_slope_acceleration": 0.003203,
+        "trend_uncertainty_pct": 0.0306,
+        "seasonal_component_pct": 0.5293,
+        "trend_confidence_score": 0.1689
+      }
+    },
+    "low_confidence_tickers": [
+      "AAPL",
+      "GOOGL",
+      "IAU",
+      "META",
+      "PERF",
+      "QQQ",
+      "QQQM",
+      "TQQQ",
+      "VGT",
+      "VOO",
+      "VXUS"
+    ],
+    "raam_signals": {
+      "raam_selected": [
+        "VXUS",
+        "QQQ",
+        "VGT",
+        "IAU",
+        "TQQQ"
+      ],
+      "raam_weights": {
+        "VXUS": 0.2,
+        "QQQ": 0.2,
+        "VGT": 0.2,
+        "IAU": 0.2,
+        "TQQQ": 0.2
+      },
+      "raam_regime_weights": {
+        "wM": 0.4,
+        "wV": 0.2,
+        "wC": 0.1,
+        "wT": 0.3
+      },
+      "raam_top_rankings": {
+        "TTWO": {
+          "total_rank": 8.5988,
+          "momentum": -11.81,
+          "selected": false
+        },
+        "TQQQ": {
+          "total_rank": 3.8012,
+          "momentum": 12.5,
+          "selected": true
+        },
+        "VGT": {
+          "total_rank": 3.8009,
+          "momentum": 9.09,
+          "selected": true
+        },
+        "META": {
+          "total_rank": 6.8002,
+          "momentum": 2.42,
+          "selected": false
+        },
+        "GOOGL": {
+          "total_rank": 4.001,
+          "momentum": 10.47,
+          "selected": false
+        },
+        "VOO": {
+          "total_rank": 4.2004,
+          "momentum": 4.2,
+          "selected": false
+        },
+        "QQQM": {
+          "total_rank": 4.0006,
+          "momentum": 6.11,
+          "selected": false
+        },
+        "AAPL": {
+          "total_rank": 6.4,
+          "momentum": -0.18,
+          "selected": false
+        }
+      }
+    }
+  },
+  "verdict": {
+    "bull": {
+      "recommendations": [
+        {
+          "ticker": "META",
+          "action": "ADD",
+          "proposed_weight_pct": 5.0,
+          "reasoning": "META has a healthy analyst upside of 27.1%, suggesting substantial growth potential. The MACD signal is Bullish, and while the RSI indicates Neutrality, the fact that it is in an Aging downtrend losing momentum (trend_direction=Down, trend_slope_acceleration > 0, trend_confidence_score > 0.5) suggests a potential reversal, making this an excellent speculative accumulation opportunity.",
+          "key_metrics_cited": [
+            "analyst_upside",
+            "trend_direction",
+            "trend_slope_acceleration",
+            "trend_confidence_score"
+          ]
+        },
+        {
+          "ticker": "GOOGL",
+          "action": "ADD",
+          "proposed_weight_pct": 3.0,
+          "reasoning": "GOOGL demonstrates an analyst upside of 11.3%, reinforcing a positive outlook. The stock is exhibiting an Aging downtrend losing momentum (trend_direction=Down, trend_slope_acceleration > 0, trend_confidence_score > 0.5), suggesting a speculative buying opportunity as it may reverse direction around current valuations.",
+          "key_metrics_cited": [
+            "analyst_upside",
+            "trend_direction",
+            "trend_slope_acceleration",
+            "trend_confidence_score"
+          ]
+        },
+        {
+          "ticker": "IAU",
+          "action": "ADD",
+          "proposed_weight_pct": 3.0,
+          "reasoning": "IAU is in a Clean uptrend pullback (trend_direction=Up, trend_confidence_score > 0.6, seasonal_component_pct < 0.8), indicating healthy consolidation before a continuation in an upward trend. This positions it as a strong candidate for additional investment, particularly given the inherent stability silver provides during market fluctuations.",
+          "key_metrics_cited": [
+            "trend_direction",
+            "trend_confidence_score",
+            "seasonal_component_pct"
+          ]
+        }
+      ],
+      "regime_acknowledgment": "The current regime risk_scalar is 0.00, implying that downside risk is minimal. Given this extremely favorable environment, my recommendations focus on opportunistic entries and accumulation of these strategic holdings, capitalizing on rebounds and recoveries while ensuring a well-rounded portfolio presence.",
+      "overall_bull_thesis": "The portfolio's allocation into strong growth stocks like META and GOOGL is well supported by significant analyst upside potential, while IAU's stability in a rising market bolsters the overall bullish outlook. Leveraging these positions positions the portfolio for aggressive growth amid a stable market backdrop."
+    },
+    "bear": {
+      "recommendations": [
+        {
+          "ticker": "MSFT",
+          "action": "REDUCE",
+          "proposed_weight_pct": 15.0,
+          "stop_loss": 408.62,
+          "reasoning": "Microsoft is highly concentrated at 33.41% of the portfolio, which creates significant downside risk. Current trend indicators indicate a downward trend (trend_direction=Down) with an accelerating slope (trend_slope_normalized=-0.00315) and trend uncertainty at 5.05% (trend_uncertainty_pct=0.0505), making this a high-risk position. HRP suggests a reduction of -28.59%.",
+          "key_metrics_cited": [
+            "concentration_risk_ticker: MSFT",
+            "trend_direction=Down",
+            "trend_slope_acceleration < 0",
+            "trend_uncertainty_pct > 0.03"
+          ]
+        },
+        {
+          "ticker": "META",
+          "action": "REDUCE",
+          "proposed_weight_pct": 10.0,
+          "stop_loss": 637.43,
+          "reasoning": "Meta is trading at a 27.1% upside to the analyst target of 855.11 while currently showing a downtrend (trend_direction=Down, trend_slope_acceleration=0.005904) with a high beta of 1.5998 indicating sensitivity to market fluctuations. The residual noise is significant (trend_uncertainty_pct=0.0498), which makes the trend signals unreliable.",
+          "key_metrics_cited": [
+            "trend_direction=Down",
+            "analyst_upside: 27.1%",
+            "trend_uncertainty_pct > 0.03"
+          ]
+        },
+        {
+          "ticker": "GOOGL",
+          "action": "REDUCE",
+          "proposed_weight_pct": 8.0,
+          "stop_loss": 323.34,
+          "reasoning": "Google is currently under significant pressure as evidenced by a downtrend (trend_direction=Down) and a decline in price momentum. The GARCH stress regime indicates volatility concerns (garch_vol=0.2183), and the stock is trading above its analyst price target (analyst_target: 376.68) indicating potential mean reversion risk. Also, with a trend uncertainty at 4.46% (trend_uncertainty_pct=0.0446), this position needs to be reduced.",
+          "key_metrics_cited": [
+            "trend_direction=Down",
+            "analyst_target: 376.68",
+            "trend_uncertainty_pct > 0.03"
+          ]
+        }
+      ],
+      "cash_recommendation": "Maintain current allocation, no cash recommendation necessary.",
+      "overall_bear_thesis": "With a risk_scalar of 0.358, the market is not in a high-risk regime currently, which allows for moderate equity exposure. However, the recommended reductions in concentrated positions like MSFT, META, and GOOGL will help mitigate risks associated with potential market downturns."
+    },
+    "cro": {
+      "portfolio_risk_score": 6,
+      "most_important_risk": "Concentration risk in MSFT, which is currently at 33.41% of the portfolio.",
+      "cash_allocation_pct": 0,
+      "bull_assessment": "The Bull recommendations for META and GOOGL suggest increases but are countered by the Bear recommendations. The trend_confidence scores for META and GOOGL are marginally below acceptable thresholds, making trend-based arguments less reliable. IAU could be a strong ADD based on its strong trend metrics.",
+      "bear_assessment": "The Bear recommendations for MSFT, META, and GOOGL highlight significant downside risks stemming from concentration and current downtrends. The suggested reductions effectively address potential risks posed by these concentrated positions, especially given the low trend confidence.",
+      "final_positions": [
+        {
+          "ticker": "AAPL",
+          "verdict": "ADD",
+          "target_weight_pct": 1.0,
+          "rationale": "Maintained due to its overall stability and positive analyst outlook despite lower trend confidence."
+        },
+        {
+          "ticker": "DASH",
+          "verdict": "REDUCE",
+          "target_weight_pct": 1.0,
+          "rationale": "Reduced due to concentrated risk and poor performance metrics."
+        },
+        {
+          "ticker": "GOOGL",
+          "verdict": "REDUCE",
+          "target_weight_pct": 2.0,
+          "rationale": "Downward trend and high beta increase volatility risk, necessitating a reduction."
+        },
+        {
+          "ticker": "IAU",
+          "verdict": "ADD",
+          "target_weight_pct": 2.0,
+          "rationale": "Strong uptrend with solid risk characteristics justifies a higher allocation."
+        },
+        {
+          "ticker": "META",
+          "verdict": "REDUCE",
+          "target_weight_pct": 3.0,
+          "rationale": "High concentration risk coupled with unreliable trend metrics warrants a decrease."
+        },
+        {
+          "ticker": "MSFT",
+          "verdict": "REDUCE",
+          "target_weight_pct": 10.0,
+          "rationale": "Highly concentrated position represents significant downside risk; reduction is advised."
+        },
+        {
+          "ticker": "PERF",
+          "verdict": "HOLD",
+          "target_weight_pct": 0.5,
+          "rationale": "Remaining in the portfolio to monitor performance, though close to exit."
+        },
+        {
+          "ticker": "QQQ",
+          "verdict": "ADD",
+          "target_weight_pct": 4.0,
+          "rationale": "Good momentum and upward trend metrics indicate it's worth increasing exposure."
+        },
+        {
+          "ticker": "QQQM",
+          "verdict": "REDUCE",
+          "target_weight_pct": 2.0,
+          "rationale": "Targets reduction due to poor trend confidence."
+        },
+        {
+          "ticker": "TQQQ",
+          "verdict": "REDUCE",
+          "target_weight_pct": 1.0,
+          "rationale": "High volatility warrants a decrease."
+        },
+        {
+          "ticker": "TTWO",
+          "verdict": "HOLD",
+          "target_weight_pct": 2.0,
+          "rationale": "Maintained for potential future upside."
+        },
+        {
+          "ticker": "V",
+          "verdict": "REDUCE",
+          "target_weight_pct": 1.0,
+          "rationale": "Low trend confidence and high concentration risk prompt a reduction."
+        },
+        {
+          "ticker": "VGT",
+          "verdict": "HOLD",
+          "target_weight_pct": 2.0,
+          "rationale": "Maintained despite low trend confidence due to beta and stability."
+        },
+        {
+          "ticker": "VOO",
+          "verdict": "HOLD",
+          "target_weight_pct": 2.0,
+          "rationale": "Maintained for diversification despite market pressures."
+        },
+        {
+          "ticker": "VXUS",
+          "verdict": "ADD",
+          "target_weight_pct": 2.0,
+          "rationale": "Increase allocation due to favorable trend metrics in emerging markets."
+        },
+        {
+          "ticker": "CASH",
+          "verdict": "HOLD",
+          "target_weight_pct": 0.0,
+          "rationale": "No cash allocation warranted under the current risk regime."
+        }
+      ],
+      "executive_summary": "The current portfolio reflects a strategic balancing act between the bullish and bearish recommendations, focusing on reducing concentration risk in key positions (MSFT, META, GOOGL) while capitalizing on strategic growth opportunities (IAU, QQQ, VXUS)."
+    },
+    "portfolio_risk_score": 6,
+    "executive_summary": "The current portfolio reflects a strategic balancing act between the bullish and bearish recommendations, focusing on reducing concentration risk in key positions (MSFT, META, GOOGL) while capitalizing on strategic growth opportunities (IAU, QQQ, VXUS).",
+    "final_positions": [
+      {
+        "ticker": "AAPL",
+        "verdict": "ADD",
+        "target_weight_pct": 1.0,
+        "rationale": "Maintained due to its overall stability and positive analyst outlook despite lower trend confidence."
+      },
+      {
+        "ticker": "DASH",
+        "verdict": "REDUCE",
+        "target_weight_pct": 1.0,
+        "rationale": "Reduced due to concentrated risk and poor performance metrics."
+      },
+      {
+        "ticker": "GOOGL",
+        "verdict": "REDUCE",
+        "target_weight_pct": 2.0,
+        "rationale": "Downward trend and high beta increase volatility risk, necessitating a reduction."
+      },
+      {
+        "ticker": "IAU",
+        "verdict": "ADD",
+        "target_weight_pct": 2.0,
+        "rationale": "Strong uptrend with solid risk characteristics justifies a higher allocation."
+      },
+      {
+        "ticker": "META",
+        "verdict": "REDUCE",
+        "target_weight_pct": 3.0,
+        "rationale": "High concentration risk coupled with unreliable trend metrics warrants a decrease."
+      },
+      {
+        "ticker": "MSFT",
+        "verdict": "REDUCE",
+        "target_weight_pct": 10.0,
+        "rationale": "Highly concentrated position represents significant downside risk; reduction is advised."
+      },
+      {
+        "ticker": "PERF",
+        "verdict": "HOLD",
+        "target_weight_pct": 0.5,
+        "rationale": "Remaining in the portfolio to monitor performance, though close to exit."
+      },
+      {
+        "ticker": "QQQ",
+        "verdict": "ADD",
+        "target_weight_pct": 4.0,
+        "rationale": "Good momentum and upward trend metrics indicate it's worth increasing exposure."
+      },
+      {
+        "ticker": "QQQM",
+        "verdict": "REDUCE",
+        "target_weight_pct": 2.0,
+        "rationale": "Targets reduction due to poor trend confidence."
+      },
+      {
+        "ticker": "TQQQ",
+        "verdict": "REDUCE",
+        "target_weight_pct": 1.0,
+        "rationale": "High volatility warrants a decrease."
+      },
+      {
+        "ticker": "TTWO",
+        "verdict": "HOLD",
+        "target_weight_pct": 2.0,
+        "rationale": "Maintained for potential future upside."
+      },
+      {
+        "ticker": "V",
+        "verdict": "REDUCE",
+        "target_weight_pct": 1.0,
+        "rationale": "Low trend confidence and high concentration risk prompt a reduction."
+      },
+      {
+        "ticker": "VGT",
+        "verdict": "HOLD",
+        "target_weight_pct": 2.0,
+        "rationale": "Maintained despite low trend confidence due to beta and stability."
+      },
+      {
+        "ticker": "VOO",
+        "verdict": "HOLD",
+        "target_weight_pct": 2.0,
+        "rationale": "Maintained for diversification despite market pressures."
+      },
+      {
+        "ticker": "VXUS",
+        "verdict": "ADD",
+        "target_weight_pct": 2.0,
+        "rationale": "Increase allocation due to favorable trend metrics in emerging markets."
+      },
+      {
+        "ticker": "CASH",
+        "verdict": "HOLD",
+        "target_weight_pct": 0.0,
+        "rationale": "No cash allocation warranted under the current risk regime."
+      }
+    ]
+  },
+  "proposed_weights": {
+    "AAPL": 1.0,
+    "DASH": 1.0,
+    "GOOGL": 2.0,
+    "IAU": 2.0,
+    "META": 3.0,
+    "MSFT": 10.0,
+    "PERF": 0.5,
+    "QQQ": 4.0,
+    "QQQM": 2.0,
+    "TQQQ": 1.0,
+    "TTWO": 2.0,
+    "V": 1.0,
+    "VGT": 2.0,
+    "VOO": 2.0,
+    "VXUS": 2.0,
+    "CASH": 0.0
+  },
+  "post_rebalance": {
+    "before": {
+      "label": "before",
+      "sharpe": 1.363,
+      "max_drawdown": -0.2344,
+      "var_95": -0.0209,
+      "beta": 1.195,
+      "monte_carlo_5th_pct": -0.0431
+    },
+    "after": {
+      "label": "after",
+      "sharpe": 0.892,
+      "max_drawdown": -0.0728,
+      "var_95": -0.007,
+      "beta": 0.408,
+      "monte_carlo_5th_pct": -0.0134
+    }
+  },
+  "validation_flags": [
+    "WARNING: Sharpe ratio degrades by 34.6% after rebalance. Defensive positioning significantly reduces risk-adjusted return.",
+    "WARNING: Monte Carlo 5th percentile improves only 3.0%. Proposed rebalance provides limited downside protection improvement."
+  ],
+  "model_used": "GPT-4o Mini (cheapest)"
+}
