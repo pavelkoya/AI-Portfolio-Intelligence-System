@@ -1,6 +1,6 @@
 # AI Portfolio Intelligence System
 
-> Institutional-grade portfolio analysis combining quantitative finance with multi-agent AI — built on a real Robinhood portfolio.
+> Institutional-grade portfolio analysis combining quantitative finance with multi-agent AI - built on a real Robinhood portfolio.
 
 [![Python](https://img.shields.io/badge/Python-3.9+-3776AB?style=flat-square&logo=python&logoColor=white)](https://python.org)
 [![Anthropic](https://img.shields.io/badge/Claude-Sonnet_4.5-CC785C?style=flat-square&logo=anthropic&logoColor=white)](https://anthropic.com)
@@ -12,7 +12,7 @@
 
 ## What This Does
 
-This system ingests a live brokerage portfolio, runs it through a stack of quantitative models, then convenes a **three-agent AI investment committee** (Bull, Bear, CRO) that debates the positions and produces a mathematically validated rebalancing recommendation — all in a single command.
+This system ingests a live brokerage portfolio, runs it through a stack of quantitative models, then convenes a **three-agent AI investment committee** (Bull, Bear, CRO) that debates the positions and produces a mathematically validated rebalancing recommendation - all in a single command.
 
 ```bash
 python main.py
@@ -62,7 +62,7 @@ python main.py
 │                                                              │
 │  ──────────────────────────────────────────────────────────  │
 │  Post-Rebalance Validator: reruns VaR / Sharpe / Drawdown    │
-│  on proposed weights — proves or disproves CRO claims        │
+│  on proposed weights - proves or disproves CRO claims        │
 └────────────────────────────┬─────────────────────────────────┘
                              │
 ┌────────────────────────────▼─────────────────────────────────┐
@@ -90,18 +90,18 @@ python main.py
 ### Multi-Agent Committee
 Three Claude agents each receive the full quantitative context and debate sequentially:
 
-- **Bull Agent** — makes the case for highest-conviction longs, citing analyst upside %, RSI oversold signals, HRP underweights, and trend conditions
-- **Bear Agent** — identifies concentration risk, GARCH stress regimes, HRP REDUCE signals, positions trading above analyst targets
-- **CRO Agent** — arbitrates, applies regime-based rules (risk_scalar > 0.7 → mandatory 20% cash), produces final position table with weights summing to exactly 100%
+- **Bull Agent** - makes the case for highest-conviction longs, citing analyst upside %, RSI oversold signals, HRP underweights, and trend conditions
+- **Bear Agent** - identifies concentration risk, GARCH stress regimes, HRP REDUCE signals, positions trading above analyst targets
+- **CRO Agent** - arbitrates, applies regime-based rules (risk_scalar > 0.7 → mandatory 20% cash), produces final position table with weights summing to exactly 100%
 
 **Post-rebalance validation** reruns VaR, Sharpe, Max Drawdown, Beta, and Monte Carlo on the proposed weights and flags if CRO claims are not mathematically supported.
 
 ### Portfolio Import
 Supports four import methods with a unified edit interface:
-- **Robinhood API** — live positions via robin_stocks
-- **CSV / Excel** — auto-detects 6 brokers (Robinhood, Fidelity, Schwab, IBKR, Freedom Broker, Tinkoff) including Russian column names
-- **Screenshot** — Claude Vision or Gemini Flash extracts positions from any brokerage UI screenshot in any language
-- **Manual entry** — add positions by shares, dollar amount, or target weight %
+- **Robinhood API** - live positions via robin_stocks
+- **CSV / Excel** - auto-detects 6 brokers (Robinhood, Fidelity, Schwab, IBKR, Freedom Broker, Tinkoff) including Russian column names
+- **Screenshot** - Claude Vision or Gemini Flash extracts positions from any brokerage UI screenshot in any language
+- **Manual entry** - add positions by shares, dollar amount, or target weight %
 
 ---
 
@@ -125,7 +125,7 @@ PDF:            reportlab (4-page institutional tear sheet)
 
 ```
 portfolio_ai/
-├── main.py                     # Single entry point — full pipeline
+├── main.py                     # Single entry point - full pipeline
 ├── config/
 │   ├── settings.py             # Environment config + constants
 │   └── broker_maps.py          # Broker column mapping registry
@@ -250,7 +250,7 @@ The sidebar includes a **Generate PDF Report** button that produces a 4-page ins
 Total runtime:  187.3s
 Risk Score:     9/10
 Regime:         Bear (scalar=0.957)
-Validation:     PASSED — all checks clear
+Validation:     PASSED - all checks clear
   Sharpe:       0.452 → 0.970  (+115%)
   Max Drawdown: -21.3% → -13.4%  (-37%)
   Beta:         1.084 → 0.685  (-37%)
@@ -286,13 +286,13 @@ Built as the capstone project for **DATA-580F: AI for Decision Making** at Bingh
 
 ## License
 
-MIT — see [LICENSE](LICENSE)
+MIT - see [LICENSE](LICENSE)
 
 ---
 
 ## Author
 
-**Daniel Pavelko** — Graduate Student, Binghamton University  
+**Daniel Pavelko** - Graduate Student, Binghamton University  
 Quantitative Finance | AI Engineering | Data Science
 
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-Connect-0A66C2?style=flat-square&logo=linkedin)](https://linkedin.com/in/pavelkoya)
