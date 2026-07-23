@@ -1,0 +1,86 @@
+{
+  "bull": {
+    "agent_type": "bull",
+    "total_citations": 11,
+    "consistent_citations": 5,
+    "contradictory_citations": 5,
+    "ambiguous_citations": 1,
+    "consistency_rate": 0.455,
+    "contradiction_rate": 0.455,
+    "contradictions": [
+      {
+        "ticker": "META",
+        "cite": "trend_direction",
+        "issue": "META is flagged as low confidence but trend signal cited",
+        "severity": "MEDIUM"
+      },
+      {
+        "ticker": "META",
+        "cite": "trend_slope_acceleration",
+        "issue": "META is flagged as low confidence but trend signal cited",
+        "severity": "MEDIUM"
+      },
+      {
+        "ticker": "GOOGL",
+        "cite": "trend_direction",
+        "issue": "GOOGL is flagged as low confidence but trend signal cited",
+        "severity": "MEDIUM"
+      },
+      {
+        "ticker": "GOOGL",
+        "cite": "trend_slope_acceleration",
+        "issue": "GOOGL is flagged as low confidence but trend signal cited",
+        "severity": "MEDIUM"
+      },
+      {
+        "ticker": "IAU",
+        "cite": "trend_direction",
+        "issue": "IAU is flagged as low confidence but trend signal cited",
+        "severity": "MEDIUM"
+      }
+    ],
+    "quality_grade": "D"
+  },
+  "bear": {
+    "agent_type": "bear",
+    "total_citations": 10,
+    "consistent_citations": 1,
+    "contradictory_citations": 5,
+    "ambiguous_citations": 4,
+    "consistency_rate": 0.1,
+    "contradiction_rate": 0.5,
+    "contradictions": [
+      {
+        "ticker": "META",
+        "cite": "trend_direction=down",
+        "issue": "META is flagged as low confidence but trend signal cited",
+        "severity": "MEDIUM"
+      },
+      {
+        "ticker": "META",
+        "cite": "analyst_upside: 27.1%",
+        "issue": "BEAR cites a bullish metric in support of SELL",
+        "severity": "HIGH"
+      },
+      {
+        "ticker": "META",
+        "cite": "trend_uncertainty_pct > 0.03",
+        "issue": "META is flagged as low confidence but trend signal cited",
+        "severity": "MEDIUM"
+      },
+      {
+        "ticker": "GOOGL",
+        "cite": "trend_direction=down",
+        "issue": "GOOGL is flagged as low confidence but trend signal cited",
+        "severity": "MEDIUM"
+      },
+      {
+        "ticker": "GOOGL",
+        "cite": "trend_uncertainty_pct > 0.03",
+        "issue": "GOOGL is flagged as low confidence but trend signal cited",
+        "severity": "MEDIUM"
+      }
+    ],
+    "quality_grade": "D"
+  }
+}
